@@ -1,5 +1,5 @@
 ## This is a sample
 
-A nice **sampl** markdown page
+A nice **samplee** markdown page
 
     Here goes some code

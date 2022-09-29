@@ -1,1 +1,1 @@
-![Tarea2 circle logo](/imagenes/Tarea2BDR.png "Tarea2")
+![Tarea2 circle logo](/imagenes/Tarea2.png "Tarea2")

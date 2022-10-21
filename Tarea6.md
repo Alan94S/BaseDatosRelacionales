@@ -21,27 +21,29 @@ FROM gasto;
 ## Cuantil distinto a la mediana
 
 ``` sql
-SELECT @pos_cuartil1 = FLOOR(COUNT(monto) / 4) - 1
-FROM gasto
-WHERE monto IS NOT NULL
-ORDER BY monto;
+DELIMITER //
+CREATE PROCEDURE quartiles(
+	 quar INT)
+BEGIN
+    SELECT monto AS cuartil
+	FROM gasto
+	WHERE monto IS NOT NULL
+	ORDER BY monto
+	LIMIT quar, 1;
+END //
+DELIMITER ;
 
-SELECT monto AS cuartil_1
+SELECT FLOOR(COUNT(monto) / 4) - 1 AS pos_cuartil1
 FROM gasto
-WHERE monto IS NOT NULL
-ORDER BY monto
-LIMIT @pos_cuartil1, 1;
+WHERE monto IS NOT NULL INTO @pos_cuartil1;
 
-SELECT @pos_cuartil3 = FLOOR((COUNT(monto) / 4) * 3) - 1
-FROM gasto
-WHERE monto IS NOT NULL
-ORDER BY monto;
+CALL quartiles(@pos_cuartil1);
 
-SELECT monto AS cuartil_3
+SELECT FLOOR((COUNT(monto) / 4) * 3) - 1 as pos_cuartil3
 FROM gasto
-WHERE monto IS NOT NULL
-ORDER BY monto
-LIMIT @pos_cuartil3, 1;
+WHERE monto IS NOT NULL INTO @pos_cuartil3;
+
+CALL quartiles(@pos_cuartil3);
 ```
 
 ## Moda

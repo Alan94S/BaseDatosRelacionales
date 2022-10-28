@@ -12,7 +12,8 @@ WHERE monto IS NOT NULL;
 
 ``` sql
 SELECT MIN(monto)
-FROM gasto
+FROM 
+
 
 SELECT MAX(monto)
 FROM gasto;

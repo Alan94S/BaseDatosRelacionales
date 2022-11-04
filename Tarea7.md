@@ -16,11 +16,20 @@ INNER JOIN empleado e ON (e.idEmpleado = r.idEmpleado)
 RIGHT JOIN pais p ON (e.idPais = p.idPais)
 GROUP BY p.nombre;
 
+--OBTENER GASTOS QUE NO TENGAN CLAIFICACIÓN
 CREATE VIEW gasto_no_clasificado AS
 SELECT g.*
 FROM gasto g
 LEFT JOIN clasificaciongasto cg ON (g.idClasificacion = cg.idclasificacion)
 WHERE cg.idclasificacion IS NULL;
+
+-- OBTENER MONTO TOTAL POR EMPLEADO SIN TOMAR EN CUENTA UNA CLASIFICACIÓN EN ESPECÍFICO
+CREATE VIEW monto_total_empelado_sin_clasificacion_gasolina AS
+SELECT e.correo, IF(ROUND(SUM(g.monto),2) IS NULL,0,ROUND(SUM(g.monto),2)) AS monto_gasto_sin_clasificacion
+FROM reporte r
+INNER JOIN empleado e ON (r.idEmpleado = e.idEmpleado)
+LEFT JOIN gasto g ON (g.idReporte = r.idReporte AND g.idGasto NOT IN (SELECT g.idGasto FROM gasto WHERE g.idClasificacion = 1))
+GROUP BY e.idEmpleado;
 
 ```
 

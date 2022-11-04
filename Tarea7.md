@@ -22,9 +22,6 @@ FROM gasto g
 LEFT JOIN clasificaciongasto cg ON (g.idClasificacion = cg.idclasificacion)
 WHERE cg.idclasificacion IS NULL;
 
-CREATE VIEW monto_total_puesto AS
-SELECT p.nombre, IF(ROUND(SUM(monto),2) IS NULL,0,ROUND(SUM(monto),2)) AS total
-FROM gasto g
 ```
 
 
